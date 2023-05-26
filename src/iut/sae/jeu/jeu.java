@@ -31,14 +31,14 @@ public class jeu {
         
         Grille GrilleTest = new Grille(hauteur,longueur);
         int nbCase=0;
-        System.out.println(GrilleTest.getTaille());
+        
         for (int i = 0; i<hauteur;i++) {
             
             for (int j = 0; j<longueur; j++) {
                 if (GrilleTest.getListeCase().get(nbCase).isEstBombe()) {
                     System.out.print("X");
                 }else {
-                    System.out.print("O");
+                    System.out.print(GrilleTest.getListeCase().get(nbCase).getNbBombeVoisine());
                 }
                 nbCase++;
             }

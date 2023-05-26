@@ -42,8 +42,7 @@ public class Grille {
             this.listeCase.add(new Case(i));
         }
         placeBombe();
-        setNbBombeVoisine()
-        
+        createListeVoisin();
         
     }
     
@@ -59,15 +58,39 @@ public class Grille {
         return this.listeCase.size();
     }
     
-    
     /** TODO comment method role
-     * @param idCase 
-     * @return le nombre de bombe parmie les voisin d'une case
+     * 
      */
-    public static int getNbBombeVoisine(int idCase) {
-        return idCase;
-        
+    public void createListeVoisin() {
+        for (Case laCase : this.getListeCase()) {
+            if (!this.isPremiereLigne(laCase.getIdentifiant())) {
+                laCase.getListeVoisin().add(this.getListeCase().get(laCase.getIdentifiant()-this.longueur));
+                if (!this.isColoneDroite(laCase.getIdentifiant())) {
+                    laCase.getListeVoisin().add(this.getListeCase().get(laCase.getIdentifiant()+1-this.longueur));
+                }
+                if (!this.isColoneGauche(laCase.getIdentifiant())) {
+                    laCase.getListeVoisin().add(this.getListeCase().get(laCase.getIdentifiant()-1-this.longueur));
+                }
+            }
+            if (!this.isColoneDroite(laCase.getIdentifiant())) {
+                laCase.getListeVoisin().add(this.getListeCase().get(laCase.getIdentifiant()+1));
+            }
+            if (!this.isColoneGauche(laCase.getIdentifiant())) {
+                laCase.getListeVoisin().add(this.getListeCase().get(laCase.getIdentifiant()-1));
+            }
+            if (!this.isDerniereLigne(laCase.getIdentifiant())) {
+                laCase.getListeVoisin().add(this.getListeCase().get(laCase.getIdentifiant()+this.longueur));
+                if (!this.isColoneDroite(laCase.getIdentifiant())) {
+                    laCase.getListeVoisin().add(this.getListeCase().get(laCase.getIdentifiant()+1+this.longueur));
+                }
+                if (!this.isColoneGauche(laCase.getIdentifiant())) {
+                    laCase.getListeVoisin().add(this.getListeCase().get(laCase.getIdentifiant()-1+this.longueur));
+                }
+            }
+            laCase.checkBombeVoisine();
+        }
     }
+    
     
     /** TODO comment method role
      * @return le nombre de bombe
@@ -100,17 +123,7 @@ public class Grille {
     /** TODO comment method role
      * 
      */
-    public void setNbBombeVoisine() {
-        for (int placeCase = 0;placeCase<this.longueur*this.hauteur;placeCase++) {
-            int nbBombeVoisine =0;
-            if (!isPremiereLigne(placeCase)) {
-                if (!isColoneGauche(placeCase)) {
-                    
-                } else if
-            }
-            this.listeCase.get(placeCase).setNbBombeVoisine(nbBombeVoisine);
-        }
-    }
+    
     
     /** TODO comment method role
      * @param placeCase numero de la case
@@ -125,7 +138,7 @@ public class Grille {
      * @return true si la case est a la derniere ligne
      */
     public boolean isDerniereLigne (int placeCase) {
-        return placeCase + this.longueur > this.longueur*this.hauteur;
+        return placeCase + this.longueur >= this.longueur*this.hauteur;
     }
     
     /** TODO comment method role

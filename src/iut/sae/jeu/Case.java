@@ -45,6 +45,16 @@ public class Case {
         return estBombe;
     }
 
+    /** @return valeur de listeVoisin */
+    public List<Case> getListeVoisin() {
+        return listeVoisin;
+    }
+
+    /** @param listeVoisin nouvelle valeur de listeVoisin */
+    public void setListeVoisin(List<Case> listeVoisin) {
+        this.listeVoisin = listeVoisin;
+    }
+
     /** @param estBombe nouvelle valeur de estBombe */
     public void setEstBombe(boolean estBombe) {
         this.estBombe = estBombe;
@@ -54,10 +64,19 @@ public class Case {
     public int getNbBombeVoisine() {
         return nbBombeVoisine;
     }
-
+    
     /** @param nbBombeVoisine nouvelle valeur de nbBombeVoisine */
     public void setNbBombeVoisine(int nbBombeVoisine) {
         this.nbBombeVoisine = nbBombeVoisine;
+    }
+
+    /** @param nbBombeVoisine nouvelle valeur de nbBombeVoisine */
+    public void checkBombeVoisine() {
+        for (Case leVoisin : this.listeVoisin) {
+            if (leVoisin.isEstBombe()) {
+                this.setNbBombeVoisine(this.getNbBombeVoisine()+1);
+            }
+        }
     }
 
     /** @return valeur de etatCase */
@@ -79,19 +98,46 @@ public class Case {
      * 
      */
     public void decouvrir () {
-        if (!estBombe) {
+        if (!(this.etatCase==2)) {
             this.etatCase=1;
             for(Case leVoisin : this.listeVoisin) {
-                if (!leVoisin.isEstBombe() && leVoisin.getEtatCase()!=2) {
+                if (!leVoisin.estBombe && leVoisin.etatCase!=2) {
                     leVoisin.setEtatCase(1);
                     if (leVoisin.getEtatCase()==0 && 
                         leVoisin.getNbBombeVoisine()==0) {
                         leVoisin.decouvrir();
                     }
-                } else if (leVoisin.isEstBombe()){
-                    gameOver();
-                }
+                } 
             }
+        } else if (this.isEstBombe()) {
+            gameOver();
+        }
+    }
+
+    /** TODO comment method role
+     * 
+     */
+    private void gameOver() {
+        
+        
+    }
+    
+    /** TODO comment method role
+     * 
+     */
+    public void changerEtatCase() {
+        switch(this.etatCase) {
+        case 0 :
+            this.etatCase=2;
+            break;
+        case 2 :
+            this.etatCase=3;
+            break;
+        case 3 :
+            this.etatCase=0;
+            break;
+        default:
+            break;
         }
     }
     

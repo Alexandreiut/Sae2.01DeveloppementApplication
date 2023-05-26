@@ -81,14 +81,17 @@ public class Case {
     public void decouvrir () {
         if (!estBombe) {
             this.etatCase=1;
-            this.listeVoisin.forEach(leVoisin -> {
-                if (!leVoisin.isEstBombe()) {
+            for(Case leVoisin : this.listeVoisin) {
+                if (!leVoisin.isEstBombe() && leVoisin.getEtatCase()!=2) {
                     leVoisin.setEtatCase(1);
-                    if (leVoisin.getEtatCase()==0) {
+                    if (leVoisin.getEtatCase()==0 && 
+                        leVoisin.getNbBombeVoisine()==0) {
                         leVoisin.decouvrir();
                     }
+                } else if (leVoisin.isEstBombe()){
+                    gameOver();
                 }
-            });
+            }
         }
     }
     

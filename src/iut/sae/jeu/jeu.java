@@ -24,9 +24,9 @@ public class jeu {
         int longueur;  
 
         // saisie du rayon du cercle
-        System.out.print("Donnez la hauteur du labyrinthe : ");
+        System.out.print("Donnez la hauteur de la grille : ");
         hauteur = entree.nextInt();
-        System.out.print("Donnez la longueur du labyrinthe : ");
+        System.out.print("Donnez la longueur de la grille : ");
         longueur = entree.nextInt();
         
         Grille GrilleTest = new Grille(hauteur,longueur);

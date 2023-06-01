@@ -98,7 +98,7 @@ public class Case {
      * 
      */
     public void decouvrir () {
-        if (!(this.etatCase==2)) {
+        if (this.etatCase!=2) {
             this.etatCase=1;
             for(Case leVoisin : this.listeVoisin) {
                 if (!leVoisin.estBombe && leVoisin.etatCase!=2) {
@@ -113,6 +113,15 @@ public class Case {
             gameOver();
         }
     }
+    
+    /** 
+     * Decouvre les Case voisines de this
+     */
+    public void decouvrirDoubleClic() {
+        for (Case leVoisin : this.listeVoisin) {
+            leVoisin.decouvrir();
+        }
+    }
 
     /** TODO comment method role
      * 
@@ -121,6 +130,7 @@ public class Case {
         
         
     }
+    
     
     /** TODO comment method role
      * 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iut.sae.application.ControllerSAe">
+   <children>
+      <BorderPane fx:id="borderPaneID" prefHeight="408.0" prefWidth="600.0">
+         <top>
+            <HBox fx:id="HautID" alignment="CENTER" prefHeight="54.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="MinuteurID" text="Minuteur" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="smileID" fitHeight="59.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../téléchargement.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="DrapeauRestantsID" text="Drapeau restants" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <HBox fx:id="bas" alignment="CENTER" prefHeight="51.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#newGame" text="Lancer une nouvelle partie" textAlignment="CENTER" />
+                     </children>
+                  </HBox>
+                  <Label fx:id="DifficultéID" text="Difficulté :" />
+               </children>
+            </HBox>
+         </bottom>
+         <left>
+            <VBox fx:id="GaucheId" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <VBox fx:id="DroitId" blendMode="DARKEN" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <effect>
+                  <Shadow />
+               </effect>
+            </VBox>
+         </right>
+      </BorderPane>
+   </children>
+</VBox>

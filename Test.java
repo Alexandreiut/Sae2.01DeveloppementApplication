@@ -42,10 +42,11 @@ public class Test extends Application {
 			
 			
 
-				
+			int i = ControllerSAe.longueurGrille;
+			int h = ControllerSAe.hauteurGrille;
 			Scene scene = new Scene(racine); 
 
-			primaryStage.setTitle("Chaine de caractere");
+			primaryStage.setTitle("Demineur");
 			 primaryStage.setHeight(1000);
 			 primaryStage.setWidth(1000);
 			 primaryStage.setScene(scene);

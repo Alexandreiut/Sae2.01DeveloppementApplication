@@ -1,8 +1,11 @@
 package iut.sae.application;
 
 
+import java.io.*;
+import java.lang.Thread;
 
-
+import javafx.animation.Timeline;
+import javafx.animation.KeyFrame;
 import java.util.List;
 import java.time.Duration;
 import java.time.LocalTime;
@@ -13,10 +16,11 @@ import javax.swing.Timer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -27,7 +31,7 @@ import javafx.scene.layout.VBox;
 import iut.sae.jeu.*;
 public class ControllerSAe {
 
-	private Grille grille;
+	public Grille grille;
 	@FXML
 	private ImageView smileID;
 
@@ -54,211 +58,348 @@ public class ControllerSAe {
 	@FXML
 	private VBox DroitId;
 	private ImageView[] listeImage;
-	
+
 	private String[] Difficulte = {"Difficulté : normal","Difficulté : facile", "Difficulté : avancé","Difficulté : personnalisé"};
-	private int DifficulteChoisi = 0;
+	private int DifficulteChoisi = -1;
+	
+	   @FXML
+	    private TextField hauteurGrilleID;
+	
+	   @FXML
+	    private TextField longueurGrilleID;
 	@FXML
 	private Label DifficulteID ;
+	
+	  @FXML
+	    private TextField nbMineID;
 	private int premierClick ;
+	private int compteBombe;
+	private int compteDrapeau;
+	public static int longueurGrille;
+	public static int hauteurGrille;
+	private Image[] cases = {new Image("Z:\\case.png"),new Image("Z:\\bombe.png"),new Image("Z:\\casevide.png")};
+	private int nbMine;
+	private Image[] smiley = {new Image("Z:\\smileyBase.png"),new Image("Z:\\smileyPerdant.png"),new Image("Z:\\smileyLunette.png"),new Image("Z:\\smileyDecou.png")};
+	
 	@FXML
 	void newGame(ActionEvent event) {
+		if (DifficulteChoisi == -1) {
+			handleBeginner(null);
+		}
 		premierClick = 0;
 		MinuteurID.setText("minuteur : 0");
-    	//Timer time = new Timer(5, null);
-    	//MinuteurID.setText("minuteur : "+ time);
-    	
-    	JeuID = new GridPane();
-    	
-    	
-    	grille = new Grille(10,10);
+		//Timer time = new Timer(5, null);
+		//MinuteurID.setText("minuteur : "+ time);
 
-    	
-		LocalTime debut;
-		debut = LocalTime.now();
+		JeuID = new GridPane();
+
 		
-		int hauteur = 0;
-		int longueur = 0;
-		
-		
-		
-    	listeImage = new ImageView[200];
-    	JeuID.getChildren().clear();
-    	
-    	for (hauteur = 0; hauteur < grille.getHauteur(); hauteur++) {
-    	    		
-    	    		int test2 = hauteur;
-    	    	for (longueur = 0; longueur < grille.getLongueur(); longueur++) {
-    				 int test = hauteur* 10+longueur;
-    				 int test3 = longueur;
-    				if  (grille.getListeCase().get(test).getEtatCase() == 0) {
-    				 listeImage[test] = new ImageView("Z:\\case.png");
-    				 }
-    		           JeuID.add(listeImage[test],hauteur,longueur);
-    		           borderPaneID.setCenter(JeuID);
-    		           
-    	    	}
-    	    	
-    	}
-    	deroulementJeu();
-	}
+		grille = new Grille(hauteurGrille,longueurGrille,nbMine);
+		compteBombe =nbMine;
+		compteDrapeau =nbMine;
+		DrapeauRestantsID.setText("Drapeau restants : " + compteDrapeau);
 	
-	void deroulementJeu() {
 
-		boolean gameOver = false;
+
 		int hauteur = 0;
 		int longueur = 0;
+		listeImage = new ImageView[longueurGrille*hauteurGrille +1];
 		JeuID.getChildren().clear();
+
 		for (hauteur = 0; hauteur < grille.getHauteur(); hauteur++) {
 
-			int test2 = hauteur;
-
+		
 			for (longueur = 0; longueur < grille.getLongueur(); longueur++) {
-				int test = hauteur* 10+longueur;
-				int test3 = longueur;
-				if (grille.getListeCase().get(test).isEstBombe() && grille.getListeCase().get(test).getEtatCase() == 1) {
-
-					listeImage[test] = new ImageView("Z:\\bombe.png");
-
-				} else if (grille.getListeCase().get(test).getEtatCase() == 1 && grille.getListeCase().get(test).getNbBombeVoisine() == 0){
-
-					listeImage[test] = new ImageView("Z:\\casevide.png");
-
-				} else if (grille.getListeCase().get(test).getEtatCase() == 1){
-					String nombreCase = "" +grille.getListeCase().get(test).getNbBombeVoisine();
-
-					listeImage[test] = new ImageView("Z:\\"+nombreCase+".png");
-
-				} else if (grille.getListeCase().get(test).getEtatCase() == 2){
-
-
-					//listeImage[test] = new ImageView("C:\\Users\\Cluzel\\Documents\\drapeau.png");
-
-				} else {
-					listeImage[test] = new ImageView("Z:\\case.png");
+				int test = hauteur* grille.getLongueur()+longueur;
+				
+				if  (grille.getListeCase().get(test).getEtatCase() == 0) {
+					listeImage[test] = new ImageView(cases[0]);
 				}
 				JeuID.add(listeImage[test],hauteur,longueur);
-				if (!gameOver) {
-
-
-					listeImage[test].setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-						public void handle(MouseEvent event) {
-
-							System.out.println(test);
-							if (event.getButton() == MouseButton.PRIMARY) {
-								
-								while (premierClick ==0) { 						
-									grille.placeBombe();
-							        grille.createListeVoisin();
-							        if (!grille.getListeCase().get(test).isEstBombe() && grille.getListeCase().get(test).getNbBombeVoisine()== 0) {
-							        	premierClick++;
-							        }
-							        if (premierClick == 0) {
-							        	grille = new Grille(10,10);
-							        	
-							        }
-							       
-								}
-								
-								grille.getListeCase().get(test).decouvrir();
-								if(grille.getListeCase().get(test).gameOver()) {
-									//gameOver = true;
-								}
-
-
-								deroulementJeu();
-								//if (grille.getListeCase().get(test).getEtatCase())
-
-
-								} 
-							
-							if (event.getButton() == MouseButton.SECONDARY && event.getButton() == MouseButton.PRIMARY) {
-								int compteBombe = 20;
-								if (grille.getListeCase().get(test).getEtatCase()== 0) {
-									compteBombe -= grille.getListeCase().get(test).drapeau();
-								} else if (grille.getListeCase().get(test).getEtatCase()== 2) {
-
-									grille.getListeCase().get(test).setEtatCase(3);
-									//if (grille.getListeCase().get(test).isEstBombe) {
-									//    compteBombe ++;
-									//}
-								} else {
-									grille.getListeCase().get(test).setEtatCase(0);
-
-								}
-								if (event.getButton() == MouseButton.SECONDARY) {
-									grille.getListeCase().get(test).decouvrirDoubleClic();
-								}
-
-							}}});
-
-
-				}
+				borderPaneID.setCenter(JeuID);
 
 			}
+
 		}
-		borderPaneID.setCenter(JeuID);
+		deroulementJeu();
 	}
-	private void updateAffichage(Grille grille) {
+
+	void deroulementJeu() {
+		int hauteur = 0;
+		int longueur = 0;
 		
-		System.out.println("dans le affichage");
-		int compteur =0;
-		for (Case laCase : grille.getListeCase()) {
+		
+		Image image =smiley[0];
+		if (!grille.getListeCase().get(0).gameOver()) {
 
-			switch(laCase.getEtatCase()) {
-			case 0:
-				System.out.println("yo");
-				listeImage[compteur] = new ImageView("Z:\\case.png");
-				break;
-			case 1:
-				System.out.println("je dois etre decouver, case :" + compteur);
-				if (grille.getListeCase().get(compteur).isEstBombe()) {
-					listeImage[compteur] = new ImageView("Z:\\bombe.png");
-				} else {
 
-					listeImage[compteur] = new ImageView("Z:\\casevide.png");
+			JeuID.getChildren().clear();
+			smileID.setImage(image);
+			//smileID = new ImageView("Z:\\smileyBase.png");
+			DrapeauRestantsID.setText("Drapeau restants : " + compteDrapeau);
+			for (hauteur = 0; hauteur < grille.getHauteur(); hauteur++) {
+
+
+
+				for (longueur = 0; longueur < grille.getLongueur() ; longueur++) {
+
+					int test = hauteur*  grille.getLongueur()+longueur;
+
+					if (grille.getListeCase().get(test).gameOver()&& grille.getListeCase().get(test).isEstBombe()) {
+						listeImage[test] = new ImageView(cases[1]);
+					}
+					else if (grille.getListeCase().get(test).isEstBombe() && grille.getListeCase().get(test).getEtatCase() == 1) {
+
+						listeImage[test] = new ImageView(cases[1]);
+
+
+
+					} else if (grille.getListeCase().get(test).getEtatCase() == 1 && grille.getListeCase().get(test).getNbBombeVoisine() == 0){
+
+						listeImage[test] = new ImageView(cases[2]);
+
+					} else if (grille.getListeCase().get(test).getEtatCase() == 1){
+						String nombreCase = "" +grille.getListeCase().get(test).getNbBombeVoisine();
+
+						listeImage[test] = new ImageView("Z:\\"+nombreCase+".png");
+
+					} else if (grille.getListeCase().get(test).getEtatCase() == 2){
+
+
+						listeImage[test] = new ImageView("Z:\\drapeau.png");
+					} else if (grille.getListeCase().get(test).getEtatCase() == 3){
+
+
+						listeImage[test] = new ImageView("Z:\\interrogation.png");
+					} else {
+						listeImage[test] = new ImageView(cases[0]);
+					}
+					JeuID.add(listeImage[test],hauteur,longueur);
+					JeuID.setAlignment(Pos.CENTER);
+
+					if (!grille.victoire()) {
+						
+
+
+							listeImage[test].setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+								public void handle(MouseEvent event) {
+
+
+									if (event.getButton() == MouseButton.PRIMARY && grille.getListeCase().get(test).getEtatCase() <2) {
+
+										while (premierClick ==0) { 						
+											grille.placeBombe();
+											grille.createListeVoisin();
+											if (!grille.getListeCase().get(test).isEstBombe() && grille.getListeCase().get(test).getNbBombeVoisine()== 0) {
+												premierClick++;
+											}
+											if (premierClick == 0) {
+												grille = new Grille(hauteurGrille,longueurGrille,nbMine);
+
+											}
+
+										}
+
+										grille.getListeCase().get(test).decouvrir();
+										if (grille.getListeCase().get(test).gameOver()) {
+											grille.defaite();
+
+										}
+										
+										Image image2 = smiley[3];
+											
+										smileID.setImage(smiley[3]);
+											
+										
+										if(smileID.getImage() == image2) {
+											System.out.println("ok");
+										}
+										deroulementJeu();
+										//if (grille.getListeCase().get(test).getEtatCase())
+
+
+									} 
+
+									/*if (event.getButton() == MouseButton.SECONDARY ) {
+									if (event.getButton() == MouseButton.PRIMARY) {
+										System.out.println("doubleClick");
+										grille.getListeCase().get(test).decouvrirDoubleClic();
+									} else if (grille.getListeCase().get(test).getEtatCase()==0){
+										if (grille.getListeCase().get(test).getEtatCase()== 0) {
+											compteBombe += grille.getListeCase().get(test).drapeau();
+											compteDrapeau --;
+
+										} else if (grille.getListeCase().get(test).getEtatCase()== 2) {
+											compteDrapeau++;
+
+											grille.getListeCase().get(test).setEtatCase(3);
+											if (grille.getListeCase().get(test).isEstBombe()) {
+												compteBombe ++;
+											}
+										} else if (grille.getListeCase().get(test).getEtatCase()!=1){
+
+											grille.getListeCase().get(test).setEtatCase(0);
+
+										}
+										System.out.print(compteBombe);
+										deroulementJeu();
+									}
+								}*/
+									/*if (event.getButton() == MouseButton.PRIMARY) {
+									if (grille.getListeCase().get(test).getEtatCase()==1 ) {
+										System.out.println("doubleClick");
+										grille.getListeCase().get(test).decouvrirDoubleClic();
+									}	else if (grille.getListeCase().get(test).getEtatCase()==0){
+										if (grille.getListeCase().get(test).getEtatCase() <2) {
+
+											while (premierClick ==0) { 						
+												grille.placeBombe();
+												grille.createListeVoisin();
+												if (!grille.getListeCase().get(test).isEstBombe() && grille.getListeCase().get(test).getNbBombeVoisine()== 0) {
+													premierClick++;
+												}
+												if (premierClick == 0) {
+													grille = new Grille(hauteurGrille, longueurGrille, nbMine);
+
+												}
+
+											}
+
+											grille.getListeCase().get(test).decouvrir();
+											/*Image image2 =new Image("Z:\\smileyDecou.png");
+											smileID.setImage(image2);*/
+
+									/*
+											if (grille.getListeCase().get(test).gameOver()) {
+												grille.defaite();
+
+											}
+
+
+											deroulementJeu();
+										}
+									}*/
+
+									if (event.getButton() == MouseButton.SECONDARY) {
+
+
+										if (grille.getListeCase().get(test).getEtatCase()== 0) {
+											compteBombe += grille.getListeCase().get(test).drapeau();
+											compteDrapeau --;
+
+										} else if (grille.getListeCase().get(test).getEtatCase()== 2) {
+											compteDrapeau++;
+
+											grille.getListeCase().get(test).setEtatCase(3);
+											if (grille.getListeCase().get(test).isEstBombe()) {
+												compteBombe ++;
+											}
+										} else if (grille.getListeCase().get(test).getEtatCase()!=1){
+
+											grille.getListeCase().get(test).setEtatCase(0);
+
+										}
+										
+										deroulementJeu();
+									}
+
+								}});
+
+
+						
+					}else {
+						image =smiley[2];
+						smileID.setImage(image);
+
+
+					}
+
+
 				}
-				break;
-			case 2:
-				listeImage[compteur] = new ImageView("Z:\\drapeau.png");
-				break;
-			case 3:
-				listeImage[compteur] = new ImageView("Z:\\ptInterro.png");
-				break;
 			}
-			JeuID.add(listeImage[compteur], compteur/grille.getLongueur(), compteur%grille.getLongueur());
 			
-			compteur ++;
-		}
-	
-		System.out.println("fin du affichage");
-	}
 
-
-	
-		
-
-		
-	
+			} else {
+				for ( hauteur = 0; hauteur < grille.getHauteur(); hauteur++) {
+				
+				
 
 
 
-	@FXML
-	void clickAction(ActionEvent event) {
+					for ( longueur = 0; longueur < grille.getLongueur() ; longueur++) {
+						int test = hauteur*  grille.getLongueur()+longueur;
+						if (grille.getListeCase().get(test).gameOver()&& grille.getListeCase().get(test).isEstBombe()) {
+							listeImage[test] = new ImageView(cases[1]);
+							JeuID.add(listeImage[test],hauteur,longueur);
+							JeuID.setAlignment(Pos.CENTER);
 
-	}
-	void setBorderPane() {
-		GridPane test ;
-		test = new GridPane();
-		for (int hauteur = 0; hauteur < 10; hauteur++) {
-			for (int longueur = 0; longueur < 10; longueur++) {
-				test.add(new Label("ok"), longueur,hauteur);
+						}
+						
+					}
+				}
+				image = new Image("Z:\\smileyPerdant.png");
+				smileID.setImage(image);
 			}
+		 
+		
+		borderPaneID.setCenter(JeuID);
+	} 
 
-		}
-		borderPaneID.setCenter(test);
-	}
 
+
+
+
+
+
+
+
+
+	
+	
+	@FXML
+    void handleBeginner(ActionEvent event) {
+		
+		hauteurGrille = 9;
+		longueurGrille = 9;
+		nbMine = 10;
+		DifficulteChoisi = 0;
+		DifficulteID.setText(Difficulte[1]);
+		newGame(null);
+    }
+
+    @FXML
+    void handleIntermediate(ActionEvent event) {
+    	hauteurGrille = 16;
+		longueurGrille = 16;
+		nbMine = 40;
+		DifficulteChoisi = 1;
+		DifficulteID.setText(Difficulte[0]);
+		newGame(null);
+    }
+
+    @FXML
+    void handleDifficult(ActionEvent event) {
+    	hauteurGrille = 32;
+		longueurGrille = 16;
+		nbMine = 99;
+		DifficulteChoisi = 2;
+		DifficulteID.setText(Difficulte[2]);
+		newGame(null);
+    }
+
+    @FXML
+    void handleCustom(ActionEvent event) {
+    	if (Integer.parseInt(hauteurGrilleID.getText())>0 && Integer.parseInt(longueurGrilleID.getText())>0 && Integer.parseInt(nbMineID.getText())>0) {
+    		hauteurGrille =Integer.parseInt(hauteurGrilleID.getText());
+    		longueurGrille =Integer.parseInt(longueurGrilleID.getText());
+    		nbMine =Integer.parseInt(nbMineID.getText());
+    		DifficulteChoisi = 3;
+        	DifficulteID.setText(Difficulte[3]);
+        	newGame(null);
+    	}
+    	
+    }
 
 
 }

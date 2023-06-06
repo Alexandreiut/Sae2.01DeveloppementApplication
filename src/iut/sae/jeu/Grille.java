@@ -134,9 +134,6 @@ public class Grille {
         }
     }
 
-    /** TODO comment method role
-     * 
-     */
 
 
     /** TODO comment method role

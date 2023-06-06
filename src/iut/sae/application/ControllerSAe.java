@@ -83,9 +83,9 @@ public class ControllerSAe {
     private int compteDrapeau;
     private int longueurGrille;
     private int hauteurGrille;
-    private Image[] cases = {new Image("application/image/case.png"),new Image("application/image/bombe.png"),new Image("application/image/casevide.png")};
+    private Image[] cases = {new Image("file:image/case.png"),new Image("file:image/bombe.png"),new Image("file:image/casevide.png")};
     private int nbMine;
-    private Image[] smiley = {new Image("iut/sae/application/image/smileyBase.png"),new Image("iut/sae/application/image/smileyLoose.png"),new Image("iut/sae/application/image/win.png"),new Image("iut/sae/application/image/devo.png")};
+    private Image[] smiley = {new Image("file:image/smileyBase.png"),new Image("file:image/smileyLoose.png"),new Image("file:image/win.png"),new Image("file:image/devo.png")};
 
     @FXML
     void newGame(ActionEvent event) {

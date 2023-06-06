@@ -4,14 +4,17 @@ package iut.sae.application;
 import java.io.*;
 import java.lang.Thread;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.animation.KeyFrame;
 import java.util.List;
+import java.util.TimerTask;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
-
-import javax.swing.Timer;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -34,9 +37,16 @@ import iut.sae.jeu.*;
  *
  */
 public class ControllerSAe {
+    
+    private int seconds = 0;
+    private  Timer timer;
 
     /** TODO comment field role (attribute, association) */
     public Grille grille;
+    
+    @FXML
+    private Label minuteurID;
+    
     @FXML
     private ImageView smileID;
 
@@ -45,9 +55,6 @@ public class ControllerSAe {
 
     @FXML
     private GridPane JeuID;
-
-    @FXML
-    private Label MinuteurID;
 
     @FXML
     private Label DrapeauRestantsID;
@@ -78,13 +85,14 @@ public class ControllerSAe {
 
     @FXML
     private TextField nbMineID;
+    
     private int premierClick ;
     private int compteBombe;
     private int compteDrapeau;
     private int longueurGrille;
     private int hauteurGrille;
     private int nbMine;
-    
+
     Image caseCache = new Image(getClass().getResource("./image/case.png").toExternalForm());
     Image bombe = new Image(getClass().getResource("./image/bombe.png").toExternalForm());
     Image casevide = new Image(getClass().getResource("./image/casevide.png").toExternalForm());
@@ -94,21 +102,26 @@ public class ControllerSAe {
     Image devo = new Image(getClass().getResource("./image/devo.png").toExternalForm());
     Image drapeau = new Image(getClass().getResource("./image/drapeau.png").toExternalForm());
     Image interrogation = new Image(getClass().getResource("./image/interrogation.png").toExternalForm());
-    
-    
+
+
     private Image[] cases = {caseCache, bombe, casevide};
     private Image[] smiley = {smileyBase, smileyLoose, win, devo};
     private Image[] imageNumero = new Image[8];
-    
-    
+
+
 
     @FXML
     void newGame(ActionEvent event) {
         if (DifficulteChoisi == -1) {
             handleBeginner(null);
         }
+        
+        minuteurID.setText("Minuteur : "+0);
+        seconds = 0;
+        stopTimer();
+        
         premierClick = 0;
-        MinuteurID.setText("minuteur : 0");
+        minuteurID.setText("minuteur : 0");
         //Timer time = new Timer(5, null);
         //MinuteurID.setText("minuteur : "+ time);
 
@@ -186,7 +199,7 @@ public class ControllerSAe {
                         int nombreCase =  grille.getListeCase().get(test).getNbBombeVoisine();
 
                         listeImage[test] = new ImageView(imageNumero[nombreCase-1]);
-                        
+
                     } else if (grille.getListeCase().get(test).getEtatCase() == 2){
 
 
@@ -212,11 +225,13 @@ public class ControllerSAe {
 
                                 if (event.getButton() == MouseButton.PRIMARY && grille.getListeCase().get(test).getEtatCase() <2) {
 
-                                    while (premierClick ==0) {                                              
+                                    while (premierClick ==0) {   
+                                        
                                         grille.placeBombe();
                                         grille.createListeVoisin();
                                         if (!grille.getListeCase().get(test).isEstBombe() && grille.getListeCase().get(test).getNbBombeVoisine()== 0) {
                                             premierClick++;
+                                            startTimer();
                                         }
                                         if (premierClick == 0) {
                                             grille = new Grille(hauteurGrille,longueurGrille,nbMine);
@@ -330,26 +345,17 @@ public class ControllerSAe {
 
                             }});
 
-
-
                     }else {
-                        image =smiley[2];
-                        smileID.setImage(image);
-
+                        smileID.setImage(win);
+                        stopTimer();
 
                     }
-
 
                 }
             }
 
-
         } else {
             for ( hauteur = 0; hauteur < grille.getHauteur(); hauteur++) {
-
-
-
-
 
                 for ( longueur = 0; longueur < grille.getLongueur() ; longueur++) {
                     int test = hauteur*  grille.getLongueur()+longueur;
@@ -362,19 +368,14 @@ public class ControllerSAe {
 
                 }
             }
-            image = new Image("Z:\\smileyPerdant.png");
-            smileID.setImage(image);
+
+            smileID.setImage(smileyLoose);
+            stopTimer();
         }
 
 
         borderPaneID.setCenter(JeuID);
     } 
-
-
-
-
-
-
 
 
 
@@ -423,6 +424,34 @@ public class ControllerSAe {
             newGame(null);
         }
 
+    }
+    
+    private void startTimer() {
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                 Platform.runLater(() -> {
+                seconds++;
+                String sec= ""+seconds;
+                minuteurID.setText("Minuteur : "+sec);
+                
+                 });
+            }
+        };
+
+        // Planifier la tâche pour s'exécuter toutes les secondes, avec un délai initial de 0
+        timer.scheduleAtFixedRate(task, 0, 1000);
+        System.out.println("Timer started");
+    }
+
+
+    private void stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+            System.out.println("Timer stopped");
+        }
     }
 
 

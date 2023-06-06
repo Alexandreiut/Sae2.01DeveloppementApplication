@@ -12,7 +12,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-
+import iut.sae.application.ControllerSAe;
 /** TODO comment class responsibility (SRP)
  * @author tany.catalabailly
  *
@@ -24,15 +24,15 @@ public class Test extends Application {
 
             /*MenuBar barreDeMenu = new MenuBar();
 
-                         Menu menuFichier = new Menu("Fichier");
-                         Menu menuEdition = new Menu("Edition");
-                         Menu menuRecherche = new Menu("Recherche");
-                         // ajout des 3 options à la barre de menu
-                         barreDeMenu.getMenus().setAll(menuFichier, menuEdition, menuRecherche);
-                         // création des 3 options du menu "Fichier"
-                         MenuItem menuItemNouveau = new MenuItem("Nouveau");
-                         MenuItem menuItemOuvrir = new MenuItem("Ouvrir");
-                         MenuItem menuItemEnregistrer = new MenuItem("Enregistrer");*/
+			 Menu menuFichier = new Menu("Fichier");
+			 Menu menuEdition = new Menu("Edition");
+			 Menu menuRecherche = new Menu("Recherche");
+			 // ajout des 3 options à la barre de menu
+			 barreDeMenu.getMenus().setAll(menuFichier, menuEdition, menuRecherche);
+			 // création des 3 options du menu "Fichier"
+			 MenuItem menuItemNouveau = new MenuItem("Nouveau");
+			 MenuItem menuItemOuvrir = new MenuItem("Ouvrir");
+			 MenuItem menuItemEnregistrer = new MenuItem("Enregistrer");*/
             FXMLLoader chargeurFXML = new FXMLLoader();
             //menuFichier.getItems().setAll(menuItemNouveau, menuItemOuvrir, menuItemEnregistrer);
             chargeurFXML.setLocation(getClass().getResource("test.fxml")); 
@@ -46,11 +46,12 @@ public class Test extends Application {
 
 
 
+
             Scene scene = new Scene(racine); 
 
             primaryStage.setTitle("Demineur");
-            primaryStage.setHeight(400);
-            primaryStage.setWidth(400);
+            primaryStage.setHeight(1000);
+            primaryStage.setWidth(1000);
             primaryStage.setScene(scene);
 
             primaryStage.show(); 

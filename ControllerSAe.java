@@ -26,6 +26,7 @@ public class ControllerSAe {
 
 
 	
+
 	private int seconds = 0;
 	private  Timer timer;
 
@@ -33,32 +34,30 @@ public class ControllerSAe {
 	@FXML
 	private ImageView smileID;
 
+	@FXML
+	private HBox bas;
 
-
-
-    @FXML
-    private HBox bas;
-
-    @FXML
-    private GridPane JeuID;
-
+	@FXML
+	private GridPane JeuID;
 
 	@FXML
 	private Label minuteurID;
 
+	@FXML
+	private Label DrapeauRestantsID;
+
+	@FXML
+	public BorderPane borderPaneID;
+	@FXML
+	private HBox HautID;
+
+	@FXML
+	private VBox GaucheId;
+
+	@FXML
+	private VBox DroitId;
 
 
-
-    @FXML
-    private Label DrapeauRestantsID;
-
-    @FXML
-    private HBox HautID;
-
-    @FXML
-    private VBox GaucheId;
-
-private BorderPane borderPaneID;
 
 	private ImageView[] listeImage;
 

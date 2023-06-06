@@ -83,9 +83,24 @@ public class ControllerSAe {
     private int compteDrapeau;
     private int longueurGrille;
     private int hauteurGrille;
-    private Image[] cases = {new Image("file:image/case.png"),new Image("file:image/bombe.png"),new Image("file:image/casevide.png")};
     private int nbMine;
-    private Image[] smiley = {new Image("file:image/smileyBase.png"),new Image("file:image/smileyLoose.png"),new Image("file:image/win.png"),new Image("file:image/devo.png")};
+    
+    Image caseCache = new Image(getClass().getResource("./image/case.png").toExternalForm());
+    Image bombe = new Image(getClass().getResource("./image/bombe.png").toExternalForm());
+    Image casevide = new Image(getClass().getResource("./image/casevide.png").toExternalForm());
+    Image smileyBase = new Image(getClass().getResource("./image/enCours.png").toExternalForm());
+    Image smileyLoose = new Image(getClass().getResource("./image/smileyLoose.png").toExternalForm());
+    Image win = new Image(getClass().getResource("./image/win.png").toExternalForm());
+    Image devo = new Image(getClass().getResource("./image/devo.png").toExternalForm());
+    Image drapeau = new Image(getClass().getResource("./image/drapeau.png").toExternalForm());
+    Image interrogation = new Image(getClass().getResource("./image/interrogation.png").toExternalForm());
+    
+    
+    private Image[] cases = {caseCache, bombe, casevide};
+    private Image[] smiley = {smileyBase, smileyLoose, win, devo};
+    private Image[] imageNumero = new Image[8];
+    
+    
 
     @FXML
     void newGame(ActionEvent event) {
@@ -105,7 +120,10 @@ public class ControllerSAe {
         compteDrapeau = nbMine;
         DrapeauRestantsID.setText("Drapeau restants : " + compteDrapeau);
 
-
+        for (int i = 1 ; i<9 ; i++) {
+            System.out.println("test " + "./image"+i+".png");
+            imageNumero[i-1] = new Image(getClass().getResource("./image/"+i+".png").toExternalForm());
+        }
 
         int hauteur = 0;
         int longueur = 0;
@@ -165,18 +183,18 @@ public class ControllerSAe {
                         listeImage[test] = new ImageView(cases[2]);
 
                     } else if (grille.getListeCase().get(test).getEtatCase() == 1){
-                        String nombreCase = "" +grille.getListeCase().get(test).getNbBombeVoisine();
+                        int nombreCase =  grille.getListeCase().get(test).getNbBombeVoisine();
 
-                        listeImage[test] = new ImageView("Z:\\"+nombreCase+".png");
-
+                        listeImage[test] = new ImageView(imageNumero[nombreCase-1]);
+                        
                     } else if (grille.getListeCase().get(test).getEtatCase() == 2){
 
 
-                        listeImage[test] = new ImageView("Z:\\drapeau.png");
+                        listeImage[test] = new ImageView(drapeau);
                     } else if (grille.getListeCase().get(test).getEtatCase() == 3){
 
 
-                        listeImage[test] = new ImageView("Z:\\interrogation.png");
+                        listeImage[test] = new ImageView(interrogation);
                     } else {
                         listeImage[test] = new ImageView(cases[0]);
                     }

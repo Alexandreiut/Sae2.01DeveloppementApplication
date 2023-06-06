@@ -21,7 +21,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import iut.sae.jeu.*;
+
 public class ControllerSAe {
+
 
 	
 	private int seconds = 0;
@@ -31,28 +33,33 @@ public class ControllerSAe {
 	@FXML
 	private ImageView smileID;
 
-	@FXML
-	private HBox bas;
 
-	@FXML
-	private GridPane JeuID;
+
+
+    @FXML
+    private HBox bas;
+
+    @FXML
+    private GridPane JeuID;
+
 
 	@FXML
 	private Label minuteurID;
 
-	@FXML
-	private Label DrapeauRestantsID;
 
-	@FXML
-	public BorderPane borderPaneID;
-	@FXML
-	private HBox HautID;
 
-	@FXML
-	private VBox GaucheId;
 
-	@FXML
-	private VBox DroitId;
+    @FXML
+    private Label DrapeauRestantsID;
+
+    @FXML
+    private HBox HautID;
+
+    @FXML
+    private VBox GaucheId;
+
+private BorderPane borderPaneID;
+
 	private ImageView[] listeImage;
 
 	private String[] Difficulte = {"Difficulté : normal","Difficulté : facile", "Difficulté : avancé","Difficulté : personnalisé"};
@@ -85,7 +92,7 @@ public class ControllerSAe {
 		
 		 minuteurID.setText("Minuteur : "+0);
 		 
-		 restartTimer();
+
 		 seconds = 0;
 		premierClick = 0;
 		
@@ -415,6 +422,8 @@ public class ControllerSAe {
 }
 
     
+
+
 
 
 

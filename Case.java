@@ -18,17 +18,17 @@ import java.util.List;
  * @author Cluzel Enzo
  */
 public class Case {
-
+    
     private int identifiant;
 
     private boolean estBombe;
-
+    
     private int nbBombeVoisine;
-
+    
     private int etatCase;
-
+    
     private List<Case> listeVoisin;
-
+    private boolean gameOver; 
     /** 
      * Constructeur de la class voisin
      * 
@@ -38,11 +38,24 @@ public class Case {
         super();
         this.listeVoisin = new ArrayList<Case>();
         this.identifiant = identifiant;
+        this.etatCase = 0;
+        this.nbBombeVoisine = 0;
+        this.gameOver = false;
+        this.estBombe = false;
     }
-
     /** @return valeur de estBombe */
     public boolean isEstBombe() {
         return estBombe;
+    }
+
+    /** @return valeur de listeVoisin */
+    public List<Case> getListeVoisin() {
+        return listeVoisin;
+    }
+
+    /** @param listeVoisin nouvelle valeur de listeVoisin */
+    public void setListeVoisin(List<Case> listeVoisin) {
+        this.listeVoisin = listeVoisin;
     }
 
     /** @param estBombe nouvelle valeur de estBombe */
@@ -54,10 +67,19 @@ public class Case {
     public int getNbBombeVoisine() {
         return nbBombeVoisine;
     }
-
+    
     /** @param nbBombeVoisine nouvelle valeur de nbBombeVoisine */
     public void setNbBombeVoisine(int nbBombeVoisine) {
         this.nbBombeVoisine = nbBombeVoisine;
+    }
+
+    /** @param nbBombeVoisine nouvelle valeur de nbBombeVoisine */
+    public void checkBombeVoisine() {
+        for (Case leVoisin : this.listeVoisin) {
+            if (leVoisin.isEstBombe()) {
+                this.setNbBombeVoisine(this.getNbBombeVoisine()+1);
+            }
+        }
     }
 
     /** @return valeur de etatCase */
@@ -74,23 +96,75 @@ public class Case {
     public int getIdentifiant() {
         return identifiant;
     }
-
+    
     /** TODO comment method role
      * 
      */
     public void decouvrir () {
-        if (!estBombe) {
+        if (this.etatCase!=2 && !this.estBombe) {
             this.etatCase=1;
-            this.listeVoisin.forEach(leVoisin -> {
-                if (!leVoisin.isEstBombe()) {
-                    leVoisin.setEtatCase(1);
-                    if (leVoisin.getEtatCase()==0) {
-                        leVoisin.decouvrir();
-                    }
-                }
-            });
+            for(Case leVoisin : this.listeVoisin) {
+                if (!leVoisin.estBombe && leVoisin.etatCase!=2 && leVoisin.etatCase!=1 && this.getNbBombeVoisine() ==0 ) {
+                    
+                	 leVoisin.etatCase=1;
+                	 for(Case Voi : leVoisin.listeVoisin) {
+                		 if (leVoisin.getNbBombeVoisine()==0 && Voi.etatCase == 0) {
+                             leVoisin.decouvrir();
+                    	 }
+                	 }
+                
+                    
+                } 
+            } 
+            
+        }else if (this.isEstBombe()) {
+        	this.etatCase=1;
+        	
+        	
+            this.gameOver = true;
+        }
+        
+    }
+    public void decou() {
+    	this.etatCase = 1;
+    }
+    /** 
+     * Decouvre les Case voisines de this
+     */
+    public void decouvrirDoubleClic() {
+        for (Case leVoisin : this.listeVoisin) {
+            leVoisin.decouvrir();
         }
     }
 
-
+    /**
+     * test
+     */
+    public boolean gameOver() {
+        return this.gameOver;
+        
+    }
+    public void setGameOver() {
+    	this.gameOver = true;
+    }
+    
+    /** TODO comment method role
+     * 
+     */
+    public int drapeau() {
+        if (this.estBombe) {
+        	this.etatCase=2;
+        	return -1;
+        	
+        } else {
+        	this.etatCase=2;
+        	return 0;
+        }
+		
+    }
+    public void teset() {
+    	
+    }
+    
+    
 }

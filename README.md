@@ -6,7 +6,7 @@
 # Sae2.01DeveloppementApplication
 Bonjour.
 
-Ce projet est relier à la SAE Developpement d'Application.
+Ce projet est relié à la SAE Developpement d'Application.
 
 Ce projet a pour but d'etre un demineur avec :
 - le gameplay de base d'un demineur (drapeau, decouverte de case ...).

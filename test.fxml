@@ -10,10 +10,66 @@
    <children>
       <MenuBar>
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Fichier">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#newGame" text="Lauch new game" />
-                  <MenuItem mnemonicParsing="false" text="Change difficulty" />
+                  <Menu mnemonicParsing="false" text="Difficulté">
+                    <items>
+                        <Menu mnemonicParsing="false" text="Personnalisé">
+                           <items>
+                              <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <TextField fx:id="hauteurGrilleID" promptText="Hauteur" />
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <TextField fx:id="longueurGrilleID" promptText="Longueur" />
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <TextField fx:id="nbMineID" promptText="nbMine" />
+                                 </graphic>
+                              </MenuItem>
+                           </items>
+                        </Menu>
+                    <MenuItem mnemonicParsing="false" onAction="#handleBeginner" text="Debutant" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleIntermediate" text="Intermediaire" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleDifficult" text="Difficile" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCustom" text="Personnalisé" />
+                        <Menu mnemonicParsing="false" text="Afficher les meilleurs scores">
+                          <items>
+                              <Menu mnemonicParsing="false" text="debutant">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="Score 1 D" />
+                                    <MenuItem mnemonicParsing="false" text=" Score 2 D" />
+                                    <MenuItem mnemonicParsing="false" text=" Score 3 D" />
+                                    <MenuItem mnemonicParsing="false" text=" Score 4 D" />
+                                    <MenuItem mnemonicParsing="false" text=" Score 5 D" />
+                                </items>
+                              </Menu>
+                              <Menu mnemonicParsing="false" text="Intermediaire">
+                                <items>
+                                    <MenuItem mnemonicParsing="false" text=" Score 5 I" />
+                                    <MenuItem mnemonicParsing="false" text=" Score 4 I" />
+                                    <MenuItem mnemonicParsing="false" text=" Score 3 I" />
+                                    <MenuItem mnemonicParsing="false" text=" Score 2 I" />
+                                    <MenuItem mnemonicParsing="false" text="Score 1 I" />
+                                </items>
+                              </Menu>
+                              <Menu mnemonicParsing="false" text="Difficile">
+                                <items>
+                                    <MenuItem mnemonicParsing="false" text="Score 1 Di" />
+                                    <MenuItem mnemonicParsing="false" text=" Score 2 Di" />
+                                    <MenuItem mnemonicParsing="false" text=" Score 3 DI" />
+                                    <MenuItem mnemonicParsing="false" text=" Score 4 DI" />
+                                    <MenuItem mnemonicParsing="false" text=" Score 5 Di" />
+                                </items>
+                              </Menu>
+                          </items>
+                        </Menu>
+                    </items>
+                  </Menu>
             </items>
           </Menu>
         </menus>
@@ -29,11 +85,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="smileID" fitHeight="59.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../téléchargement.jpg" />
-                           </image>
-                        </ImageView>
+                        <ImageView fx:id="smileID" fitHeight="59.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -52,7 +104,7 @@
                         <Button mnemonicParsing="false" onAction="#newGame" text="Lancer une nouvelle partie" textAlignment="CENTER" />
                      </children>
                   </HBox>
-                  <Label fx:id="DifficultéID" text="Difficulté :" />
+                  <Label fx:id="DifficulteID" />
                </children>
             </HBox>
          </bottom>

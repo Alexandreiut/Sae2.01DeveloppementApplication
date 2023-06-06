@@ -46,8 +46,8 @@ public class Test extends Application {
 			Scene scene = new Scene(racine); 
 
 			primaryStage.setTitle("Chaine de caractere");
-			 primaryStage.setHeight(400);
-			 primaryStage.setWidth(600);
+			 primaryStage.setHeight(1000);
+			 primaryStage.setWidth(1000);
 			 primaryStage.setScene(scene);
 			 
 			 primaryStage.show(); 

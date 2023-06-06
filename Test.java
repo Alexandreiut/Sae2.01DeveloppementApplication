@@ -41,9 +41,10 @@ public class Test extends Application {
 			
 			
 			
-
-			int i = ControllerSAe.longueurGrille;
-			int h = ControllerSAe.hauteurGrille;
+			int i = 0;
+			int h = 0;
+			i = ControllerSAe.longueurGrille;
+			h = ControllerSAe.hauteurGrille;
 			Scene scene = new Scene(racine); 
 
 			primaryStage.setTitle("Demineur");

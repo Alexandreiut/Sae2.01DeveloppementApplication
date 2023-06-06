@@ -84,8 +84,9 @@ public class ControllerSAe {
 		}
 		
 		 minuteurID.setText("Minuteur : "+0);
+		 
 		 restartTimer();
-		stopTimer();
+		 seconds = 0;
 		premierClick = 0;
 		
 		//Timer time = new Timer(5, null);
@@ -402,14 +403,7 @@ public class ControllerSAe {
         System.out.println("Timer started");
     }
 
-    private void restartTimer() {
-        if (timer != null) {
-            timer.cancel();
-            seconds = 0;
-            startTimer();
-            System.out.println("Timer restarted");
-        }
-    }
+ 
 
     private void stopTimer() {
         if (timer != null) {

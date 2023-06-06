@@ -80,7 +80,7 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="MinuteurID" text="Minuteur" />
+                        <Label fx:id="minuteurID" text="Minuteur" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -109,14 +109,10 @@
             </HBox>
          </bottom>
          <left>
-            <VBox fx:id="GaucheId" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+            <VBox fx:id="GaucheId" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER" />
          </left>
          <right>
-            <VBox fx:id="DroitId" blendMode="DARKEN" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-               <effect>
-                  <Shadow />
-               </effect>
-            </VBox>
+            <VBox fx:id="DroitId" blendMode="DARKEN" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER" />
          </right>
          <center>
             <GridPane fx:id="JeuID" alignment="CENTER" BorderPane.alignment="CENTER">

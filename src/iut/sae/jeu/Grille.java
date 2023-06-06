@@ -13,39 +13,53 @@ import java.util.ArrayList;
  *
  */
 public class Grille {
-    
+
     /** la hauteur du labyrinthe*/
     private int hauteur;
-    
+
     /** la longueur du labyrinthe */
     private int longueur;
-    
+
     /** le nombre de mine dans la partie */
     private int nbMine;
-    
+
     /** liste contenant l'ensemble des salle du labyrinthe*/
     private List<Case> listeCase;
 
-    
+
     /**
-     * constructeur de labyrinthe
-     * @param hauteur du labyrinthe
-     * @param longueur du labyrinthe
+     * constructeur de la grille
+     * @param hauteur de la grille
+     * @param longueur de la grille
+     * @param nbMine de la grille
      */
-    public Grille(int hauteur, int longueur) {
+    public Grille(int hauteur, int longueur,int nbMine) {
         super();
         this.hauteur = hauteur;
         this.longueur = longueur;
-        this.nbMine = 10;
+        this.nbMine = nbMine;
         this.listeCase = new ArrayList<Case>();
         for (int i =0; i<hauteur*longueur;i++) {
             this.listeCase.add(new Case(i));
         }
-        placeBombe();
-        createListeVoisin();
-        
+
+
     }
-    
+
+    /** TODO comment method role
+     * @return la hauteur de la grille
+     */
+    public int getHauteur() {
+        return hauteur;
+    }
+
+    /** TODO comment method role
+     * @return la longueur de la grille
+     */
+    public int getLongueur() {
+        return longueur;
+    }
+
     /** @return valeur de listeCase */
     public List<Case> getListeCase() {
         return listeCase;
@@ -57,7 +71,7 @@ public class Grille {
     public int getTaille () {
         return this.listeCase.size();
     }
-    
+
     /** TODO comment method role
      * 
      */
@@ -90,8 +104,8 @@ public class Grille {
             laCase.checkBombeVoisine();
         }
     }
-    
-    
+
+
     /** TODO comment method role
      * @return le nombre de bombe
      */
@@ -103,9 +117,9 @@ public class Grille {
             }
         }
         return nbBombe;
-        
+
     }
-    
+
     /** TODO comment method role
      * 
      */
@@ -119,12 +133,12 @@ public class Grille {
             }
         }
     }
-    
+
     /** TODO comment method role
      * 
      */
-    
-    
+
+
     /** TODO comment method role
      * @param placeCase numero de la case
      * @return true si la case est a la premiere ligne
@@ -132,7 +146,7 @@ public class Grille {
     public boolean isPremiereLigne (int placeCase) {
         return placeCase / this.longueur < 1;
     }
-    
+
     /** TODO comment method role
      * @param placeCase numero de la case
      * @return true si la case est a la derniere ligne
@@ -140,7 +154,7 @@ public class Grille {
     public boolean isDerniereLigne (int placeCase) {
         return placeCase + this.longueur >= this.longueur*this.hauteur;
     }
-    
+
     /** TODO comment method role
      * @param placeCase numero de la case
      * @return true si la case est a la colone de gauche
@@ -148,7 +162,7 @@ public class Grille {
     public boolean isColoneGauche (int placeCase) {
         return placeCase % this.longueur ==0;
     }
-    
+
     /** TODO comment method role
      * @param placeCase numero de la case
      * @return true si la case est a la colone de droite
@@ -156,5 +170,25 @@ public class Grille {
     public boolean isColoneDroite (int placeCase) {
         return (placeCase+1) % this.longueur ==0;
     }
-    
+
+    /** TODO comment method role
+     * @return true si toute les case qui ne sont pas des bombe sont decouverte
+     *         false sinon
+     */
+    public boolean victoire() {
+        for (Case laCase : this.listeCase) {
+            if (!laCase.isEstBombe()&& laCase.getEtatCase()==0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    /**
+     * met le boolean gameOver de chaque case a true
+     */
+    public void defaite() {
+        for (Case cases : this.getListeCase()) {
+            cases.setGameOver();
+        }
+    }
 }

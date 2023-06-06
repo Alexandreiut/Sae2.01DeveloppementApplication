@@ -28,7 +28,7 @@ public class Case {
     private int etatCase;
     
     private List<Case> listeVoisin;
-    
+    private boolean gameOver; 
     /** 
      * Constructeur de la class voisin
      * 
@@ -38,8 +38,11 @@ public class Case {
         super();
         this.listeVoisin = new ArrayList<Case>();
         this.identifiant = identifiant;
+        this.etatCase = 0;
+        this.nbBombeVoisine = 0;
+        this.gameOver = false;
+        this.estBombe = false;
     }
-
     /** @return valeur de estBombe */
     public boolean isEstBombe() {
         return estBombe;
@@ -98,22 +101,36 @@ public class Case {
      * 
      */
     public void decouvrir () {
-        if (this.etatCase!=2) {
+        if (this.etatCase!=2 && !this.estBombe) {
             this.etatCase=1;
             for(Case leVoisin : this.listeVoisin) {
-                if (!leVoisin.estBombe && leVoisin.etatCase!=2) {
-                    leVoisin.setEtatCase(1);
-                    if (leVoisin.getEtatCase()==0 && 
-                        leVoisin.getNbBombeVoisine()==0) {
-                        leVoisin.decouvrir();
-                    }
+                if (!leVoisin.estBombe && leVoisin.etatCase!=2 && leVoisin.etatCase!=1 && this.getNbBombeVoisine() ==0 ) {
+                    
+                         leVoisin.etatCase=1;
+                         for(Case Voi : leVoisin.listeVoisin) {
+                                 if (leVoisin.getNbBombeVoisine()==0 && Voi.etatCase == 0) {
+                             leVoisin.decouvrir();
+                         }
+                         }
+                
+                    
                 } 
-            }
-        } else if (this.isEstBombe()) {
-            gameOver();
+            } 
+            
+        }else if (this.isEstBombe()) {
+                this.etatCase=1;
+                
+                
+            this.gameOver = true;
         }
+        
     }
-    
+    /** TODO comment method role
+     * 
+     */
+    public void decou() {
+        this.etatCase = 1;
+    }
     /** 
      * Decouvre les Case voisines de this
      */
@@ -123,32 +140,42 @@ public class Case {
         }
     }
 
-    /** TODO comment method role
-     * 
+    /**
+     * test
+     * @return le boolean gameOver
      */
-    private void gameOver() {
-        
+    public boolean gameOver() {
+        return this.gameOver;
         
     }
     
-    
     /** TODO comment method role
      * 
      */
-    public void changerEtatCase() {
-        switch(this.etatCase) {
-        case 0 :
-            this.etatCase=2;
-            break;
-        case 2 :
-            this.etatCase=3;
-            break;
-        case 3 :
-            this.etatCase=0;
-            break;
-        default:
-            break;
+    public void setGameOver() {
+        this.gameOver = true;
+    }
+    
+    /** TODO comment method role
+     * @return -1 si le dradeau est sur une bombe, sinon return 0
+     * 
+     */
+    public int drapeau() {
+        if (this.estBombe) {
+                this.etatCase=2;
+                return -1;
+                
+        } else {
+                this.etatCase=2;
+                return 0;
         }
+                
+    }
+    /** TODO comment method role
+     * 
+     */
+    public void teset() {
+        
     }
     
     

@@ -117,10 +117,8 @@ class TestCase {
 		test2.decouvrir();
 		assertEquals(test2.getEtatCase(),1);
 		assertEquals(caseVoisin.getEtatCase(),1);
-		assertFalse(test.gameOver());
 		test.setEstBombe(true);
 		test.decouvrir();
-		assertTrue(test.gameOver());
 	}
 
 
@@ -136,20 +134,9 @@ class TestCase {
 		assertEquals(caseVoisin.getEtatCase(),1);
 	}
 
-	@Test
-	void testGameOver() {
-		assertFalse(test.gameOver());
-		test.setGameOver();
-		assertTrue(test.gameOver());
-		
-	}
+	
 
-	@Test
-	void testSetGameOver() {
-		assertFalse(test.gameOver());
-		test.setGameOver();
-		assertTrue(test.gameOver());
-	}
+	
 
 	@Test
 	void testDrapeau() {

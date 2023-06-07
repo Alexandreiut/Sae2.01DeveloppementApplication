@@ -1,20 +1,9 @@
 package iut.sae.application;
 
-
-import java.io.*;
-import java.lang.Thread;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.animation.KeyFrame;
-import java.util.List;
-import java.util.TimerTask;
-import java.time.Duration;
-import java.time.LocalTime;
-import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -32,9 +21,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import iut.sae.jeu.*;
-/** TODO comment class responsibility (SRP)
- * @author tany.catalabailly
+/** 
+ * Fais le lien entre la vue (le fxml) et le modele (les classe Case et Grille)
+ * pour le demineur
  *
+ * @author Alexandre Brouzes
+ * @author Tany Catala Bailly
+ * @author Enzo Cluzel
  */
 public class DemineurControleur {
 
@@ -134,7 +127,6 @@ public class DemineurControleur {
         DrapeauRestantsID.setText("Drapeau restants : " + compteDrapeau);
 
         for (int i = 1 ; i<9 ; i++) {
-            System.out.println("test " + "./image"+i+".png");
             imageNumero[i-1] = new Image(getClass().getResource("./image/"+i+".png").toExternalForm());
         }
 
@@ -167,7 +159,7 @@ public class DemineurControleur {
 
 
         Image image =smiley[0];
-        if (!grille.getListeCase().get(0).gameOver()) {
+        if (!grille.isGameOver()) {
 
 
             JeuID.getChildren().clear();
@@ -181,7 +173,7 @@ public class DemineurControleur {
 
                     int test = hauteur*  grille.getLongueur()+longueur;
 
-                    if (grille.getListeCase().get(test).gameOver()&& grille.getListeCase().get(test).isEstBombe()) {
+                    if (grille.isGameOver() && grille.getListeCase().get(test).isEstBombe()) {
                         listeImage[test] = new ImageView(cases[1]);
                     }
                     else if (grille.getListeCase().get(test).isEstBombe() && grille.getListeCase().get(test).getEtatCase() == 1) {
@@ -225,10 +217,9 @@ public class DemineurControleur {
                                 if (event.getButton() == MouseButton.PRIMARY && grille.getListeCase().get(test).getEtatCase() <2) {
 
                                     if (grille.getListeCase().get(test).getEtatCase()==1 ) {
-                                        System.out.println("doubleClick");
                                         grille.getListeCase().get(test).decouvrirDoubleClic();
                                         for (Case voisin : grille.getListeCase().get(test).getListeVoisin()) {
-                                            if (voisin.gameOver() && voisin.getEtatCase() != 2) {
+                                            if (voisin.isEstBombe() && voisin.getEtatCase() != 2) {
                                                 grille.defaite();
 
                                             }
@@ -252,8 +243,10 @@ public class DemineurControleur {
                                     }
 
                                     grille.getListeCase().get(test).decouvrir();
-                                    if (grille.getListeCase().get(test).gameOver()) {
+                                    if (grille.getListeCase().get(test).isEstBombe() && grille.getListeCase().get(test).getEtatCase()==1) {
+                                        
                                         grille.defaite();
+                            
 
                                     }
 
@@ -262,9 +255,7 @@ public class DemineurControleur {
                                     smileID.setImage(smiley[3]);
 
 
-                                    if(smileID.getImage() == image2) {
-                                        System.out.println("ok");
-                                    }
+
                                     deroulementJeu();
                                     
 
@@ -310,7 +301,7 @@ public class DemineurControleur {
 
                 for ( longueur = 0; longueur < grille.getLongueur() ; longueur++) {
                     int test = hauteur*  grille.getLongueur()+longueur;
-                    if (grille.getListeCase().get(test).gameOver()&& grille.getListeCase().get(test).isEstBombe()) {
+                    if (grille.getListeCase().get(test).isEstBombe()) {
                         listeImage[test] = new ImageView(cases[1]);
                         JeuID.add(listeImage[test],hauteur,longueur);
                         JeuID.setAlignment(Pos.CENTER);
@@ -393,7 +384,6 @@ public class DemineurControleur {
 
         // Planifier la tâche pour s'exécuter toutes les secondes, avec un délai initial de 0
         timer.scheduleAtFixedRate(task, 0, 1000);
-        System.out.println("Timer started");
     }
 
 
@@ -401,7 +391,6 @@ public class DemineurControleur {
         if (timer != null) {
             timer.cancel();
             timer = null;
-            System.out.println("Timer stopped");
         }
     }
 

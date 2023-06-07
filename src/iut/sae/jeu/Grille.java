@@ -26,18 +26,27 @@ public class Grille {
     /** liste contenant l'ensemble des salle du labyrinthe*/
     private List<Case> listeCase;
 
+    private boolean gameOver; 
 
     /**
      * constructeur de la grille
      * @param hauteur de la grille
      * @param longueur de la grille
      * @param nbMine de la grille
+     * @throws IllegalArgumentExeption si les parametree sont negatif.
      */
     public Grille(int hauteur, int longueur,int nbMine) {
         super();
+        if (   hauteur  <= 0 
+            && longueur <= 0
+            && nbMine   <= 0
+            && nbMine   >= hauteur*longueur) {
+            throw (new IllegalArgumentException("hauteur longueur et nbMine doivent etre positif"));
+        }
         this.hauteur = hauteur;
         this.longueur = longueur;
         this.nbMine = nbMine;
+        this.gameOver = false;
         this.listeCase = new ArrayList<Case>();
         for (int i =0; i<hauteur*longueur;i++) {
             this.listeCase.add(new Case(i));
@@ -46,14 +55,14 @@ public class Grille {
 
     }
 
-    /** TODO comment method role
+    /** 
      * @return la hauteur de la grille
      */
     public int getHauteur() {
         return hauteur;
     }
 
-    /** TODO comment method role
+    /** 
      * @return la longueur de la grille
      */
     public int getLongueur() {
@@ -65,15 +74,16 @@ public class Grille {
         return listeCase;
     }
 
-    /** TODO comment method role
+    /** 
      * @return la taille du labyrinthe
      */
     public int getTaille () {
         return this.listeCase.size();
     }
 
-    /** TODO comment method role
-     * 
+    /** 
+     * Ajoute les case voisine dans la liste les voisin de chaque case.
+     * Defini les voisin de chaque case.
      */
     public void createListeVoisin() {
         for (Case laCase : this.getListeCase()) {
@@ -106,7 +116,7 @@ public class Grille {
     }
 
 
-    /** TODO comment method role
+    /**
      * @return le nombre de bombe
      */
     public int nombreBombe() {
@@ -120,8 +130,8 @@ public class Grille {
 
     }
 
-    /** TODO comment method role
-     * 
+    /** 
+     * Creer des case qui sont des bombe
      */
     public void placeBombe() {
         int nbBombeDemande = nombreBombe();
@@ -136,7 +146,7 @@ public class Grille {
 
 
 
-    /** TODO comment method role
+    /**
      * @param placeCase numero de la case
      * @return true si la case est a la premiere ligne
      */
@@ -144,7 +154,7 @@ public class Grille {
         return placeCase / this.longueur < 1;
     }
 
-    /** TODO comment method role
+    /**
      * @param placeCase numero de la case
      * @return true si la case est a la derniere ligne
      */
@@ -152,7 +162,7 @@ public class Grille {
         return placeCase + this.longueur >= this.longueur*this.hauteur;
     }
 
-    /** TODO comment method role
+    /**
      * @param placeCase numero de la case
      * @return true si la case est a la colone de gauche
      */
@@ -160,7 +170,7 @@ public class Grille {
         return placeCase % this.longueur ==0;
     }
 
-    /** TODO comment method role
+    /**
      * @param placeCase numero de la case
      * @return true si la case est a la colone de droite
      */
@@ -168,7 +178,7 @@ public class Grille {
         return (placeCase+1) % this.longueur ==0;
     }
 
-    /** TODO comment method role
+    /**
      * @return true si toute les case qui ne sont pas des bombe sont decouverte
      *         false sinon
      */
@@ -184,8 +194,12 @@ public class Grille {
      * met le boolean gameOver de chaque case a true
      */
     public void defaite() {
-        for (Case cases : this.getListeCase()) {
-            cases.setGameOver();
-        }
+        this.gameOver = true;
     }
+
+    /** @return valeur de gameOver */
+    public boolean isGameOver() {
+        return gameOver;
+    }
+    
 }

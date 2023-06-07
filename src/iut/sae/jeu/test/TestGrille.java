@@ -23,7 +23,7 @@ class TestGrille {
 	void testGetHauteur() {
 		assertEquals(grandeGrille.getHauteur(), 10);
 		assertEquals(petiteGrille.getHauteur(), 5);
-		assertEquals(videGrille.getHauteur(), 5);
+		assertEquals(videGrille.getHauteur(), 0);
 	
 	}
 
@@ -31,7 +31,7 @@ class TestGrille {
 	void testGetLongueur() {
 		assertEquals(grandeGrille.getLongueur(), 10);
 		assertEquals(petiteGrille.getLongueur(), 5);
-		assertEquals(videGrille.getLongueur(), 5);
+		assertEquals(videGrille.getLongueur(), 0);
 	}
 
 	@Test
@@ -89,10 +89,8 @@ class TestGrille {
 
 	@Test
 	void testVictoire() {
-		int i=0;
 		for (Case element : grandeGrille.getListeCase()) {
 			element.setEtatCase(1);
-			i++;
 			
 		}
 		assertFalse(petiteGrille.victoire());
@@ -104,9 +102,9 @@ class TestGrille {
 
 	@Test
 	void testDefaite() {
-		assertFalse(grandeGrille.getListeCase().get(0).gameOver());
+		assertFalse(grandeGrille.isGameOver());
 		grandeGrille.defaite();
-		assertTrue(grandeGrille.getListeCase().get(0).gameOver());
+		assertTrue(grandeGrille.isGameOver());
 		
 	}
 

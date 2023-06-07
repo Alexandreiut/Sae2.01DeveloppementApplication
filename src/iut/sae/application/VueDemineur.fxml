@@ -14,7 +14,11 @@
             <items>
                   <Menu mnemonicParsing="false" text="Difficulté">
                     <items>
-                        <Menu mnemonicParsing="false" text="Personnalisé">
+                    <MenuItem mnemonicParsing="false" onAction="#handleBeginner" text="Debutant" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleIntermediate" text="Intermediaire" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleDifficult" text="Difficile" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCustom" text="Personnalisé" />
+                        <Menu mnemonicParsing="false" text="ParametrePersonnalisé">
                            <items>
                               <MenuItem mnemonicParsing="false">
                                  <graphic>
@@ -33,11 +37,7 @@
                               </MenuItem>
                            </items>
                         </Menu>
-                    <MenuItem mnemonicParsing="false" onAction="#handleBeginner" text="Debutant" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleIntermediate" text="Intermediaire" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleDifficult" text="Difficile" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCustom" text="Personnalisé" />
-                        <Menu mnemonicParsing="false" text="Afficher les meilleurs scores">
+                        <Menu mnemonicParsing="false" text="Afficher les meilleurs scores (WIP)">
                           <items>
                               <Menu mnemonicParsing="false" text="debutant">
                                 <items>
@@ -72,6 +72,20 @@
                   </Menu>
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Edit (WIP)">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Controles" />
+                  <MenuItem mnemonicParsing="false" text="Troisieme Action" />
+                  <MenuItem mnemonicParsing="false" text="Scene de Jeu" />
+                  <MenuItem mnemonicParsing="false" text="Langue" />
+                  <MenuItem mnemonicParsing="false" text="Difficulté par default" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Aide (WIP)">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Aide au Joueur" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
       <BorderPane fx:id="borderPaneID" prefHeight="408.0" prefWidth="600.0">

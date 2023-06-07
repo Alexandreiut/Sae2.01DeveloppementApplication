@@ -37,16 +37,16 @@ import iut.sae.jeu.*;
  *
  */
 public class DemineurControleur {
-    
+
     private int seconds = 0;
     private  Timer timer;
 
     /** TODO comment field role (attribute, association) */
     public Grille grille;
-    
+
     @FXML
     private Label minuteurID;
-    
+
     @FXML
     private ImageView smileID;
 
@@ -85,7 +85,7 @@ public class DemineurControleur {
 
     @FXML
     private TextField nbMineID;
-    
+
     private int premierClick ;
     private int compteBombe;
     private int compteDrapeau;
@@ -115,11 +115,11 @@ public class DemineurControleur {
         if (DifficulteChoisi == -1) {
             handleBeginner(null);
         }
-        
+
         minuteurID.setText("Minuteur : "+0);
         seconds = 0;
         stopTimer();
-        
+
         premierClick = 0;
         minuteurID.setText("minuteur : 0");
         //Timer time = new Timer(5, null);
@@ -172,7 +172,6 @@ public class DemineurControleur {
 
             JeuID.getChildren().clear();
             smileID.setImage(image);
-            //smileID = new ImageView("Z:\\smileyBase.png");
             DrapeauRestantsID.setText("Drapeau restants : " + compteDrapeau);
             for (hauteur = 0; hauteur < grille.getHauteur(); hauteur++) {
 
@@ -225,8 +224,20 @@ public class DemineurControleur {
 
                                 if (event.getButton() == MouseButton.PRIMARY && grille.getListeCase().get(test).getEtatCase() <2) {
 
+                                    if (grille.getListeCase().get(test).getEtatCase()==1 ) {
+                                        System.out.println("doubleClick");
+                                        grille.getListeCase().get(test).decouvrirDoubleClic();
+                                        for (Case voisin : grille.getListeCase().get(test).getListeVoisin()) {
+                                            if (voisin.gameOver() && voisin.getEtatCase() != 2) {
+                                                grille.defaite();
+
+                                            }
+                                        }
+
+                                    }
+
                                     while (premierClick ==0) {   
-                                        
+
                                         grille.placeBombe();
                                         grille.createListeVoisin();
                                         if (!grille.getListeCase().get(test).isEstBombe() && grille.getListeCase().get(test).getNbBombeVoisine()== 0) {
@@ -255,70 +266,10 @@ public class DemineurControleur {
                                         System.out.println("ok");
                                     }
                                     deroulementJeu();
-                                    //if (grille.getListeCase().get(test).getEtatCase())
+                                    
 
 
                                 } 
-
-                                /*if (event.getButton() == MouseButton.SECONDARY ) {
-                                                                        if (event.getButton() == MouseButton.PRIMARY) {
-                                                                                System.out.println("doubleClick");
-                                                                                grille.getListeCase().get(test).decouvrirDoubleClic();
-                                                                        } else if (grille.getListeCase().get(test).getEtatCase()==0){
-                                                                                if (grille.getListeCase().get(test).getEtatCase()== 0) {
-                                                                                        compteBombe += grille.getListeCase().get(test).drapeau();
-                                                                                        compteDrapeau --;
-
-                                                                                } else if (grille.getListeCase().get(test).getEtatCase()== 2) {
-                                                                                        compteDrapeau++;
-
-                                                                                        grille.getListeCase().get(test).setEtatCase(3);
-                                                                                        if (grille.getListeCase().get(test).isEstBombe()) {
-                                                                                                compteBombe ++;
-                                                                                        }
-                                                                                } else if (grille.getListeCase().get(test).getEtatCase()!=1){
-
-                                                                                        grille.getListeCase().get(test).setEtatCase(0);
-
-                                                                                }
-                                                                                System.out.print(compteBombe);
-                                                                                deroulementJeu();
-                                                                        }
-                                                                }*/
-                                /*if (event.getButton() == MouseButton.PRIMARY) {
-                                                                        if (grille.getListeCase().get(test).getEtatCase()==1 ) {
-                                                                                System.out.println("doubleClick");
-                                                                                grille.getListeCase().get(test).decouvrirDoubleClic();
-                                                                        }       else if (grille.getListeCase().get(test).getEtatCase()==0){
-                                                                                if (grille.getListeCase().get(test).getEtatCase() <2) {
-
-                                                                                        while (premierClick ==0) {                                              
-                                                                                                grille.placeBombe();
-                                                                                                grille.createListeVoisin();
-                                                                                                if (!grille.getListeCase().get(test).isEstBombe() && grille.getListeCase().get(test).getNbBombeVoisine()== 0) {
-                                                                                                        premierClick++;
-                                                                                                }
-                                                                                                if (premierClick == 0) {
-                                                                                                        grille = new Grille(hauteurGrille, longueurGrille, nbMine);
-
-                                                                                                }
-
-                                                                                        }
-
-                                                                                        grille.getListeCase().get(test).decouvrir();
-                                                                                        /*Image image2 =new Image("Z:\\smileyDecou.png");
-                                                                                        smileID.setImage(image2);*/
-
-                                /*
-                                                                                        if (grille.getListeCase().get(test).gameOver()) {
-                                                                                                grille.defaite();
-
-                                                                                        }
-
-
-                                                                                        deroulementJeu();
-                                                                                }
-                                                                        }*/
 
                                 if (event.getButton() == MouseButton.SECONDARY) {
 
@@ -425,18 +376,18 @@ public class DemineurControleur {
         }
 
     }
-    
+
     private void startTimer() {
         timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                 Platform.runLater(() -> {
-                seconds++;
-                String sec= ""+seconds;
-                minuteurID.setText("Minuteur : "+sec);
-                
-                 });
+                Platform.runLater(() -> {
+                    seconds++;
+                    String sec= ""+seconds;
+                    minuteurID.setText("Minuteur : "+sec);
+
+                });
             }
         };
 

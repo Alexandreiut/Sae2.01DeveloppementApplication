@@ -18,15 +18,15 @@ import java.util.List;
  * @author Cluzel Enzo
  */
 public class Case {
-    
+
     private int identifiant;
 
     private boolean estBombe;
-    
+
     private int nbBombeVoisine;
-    
+
     private int etatCase;
-    
+
     private List<Case> listeVoisin;
     private boolean gameOver; 
     /** 
@@ -67,7 +67,7 @@ public class Case {
     public int getNbBombeVoisine() {
         return nbBombeVoisine;
     }
-    
+
     /** @param nbBombeVoisine nouvelle valeur de nbBombeVoisine */
     public void setNbBombeVoisine(int nbBombeVoisine) {
         this.nbBombeVoisine = nbBombeVoisine;
@@ -96,7 +96,7 @@ public class Case {
     public int getIdentifiant() {
         return identifiant;
     }
-    
+
     /** TODO comment method role
      * 
      */
@@ -105,25 +105,24 @@ public class Case {
             this.etatCase=1;
             for(Case leVoisin : this.listeVoisin) {
                 if (!leVoisin.estBombe && leVoisin.etatCase!=2 && leVoisin.etatCase!=1 && this.getNbBombeVoisine() ==0 ) {
-                    
-                         leVoisin.etatCase=1;
-                         for(Case Voi : leVoisin.listeVoisin) {
-                                 if (leVoisin.getNbBombeVoisine()==0 && Voi.etatCase == 0) {
-                             leVoisin.decouvrir();
-                         }
-                         }
-                
-                    
+
+                    leVoisin.etatCase=1;
+                    for(Case Voi : leVoisin.listeVoisin) {
+                        if (leVoisin.getNbBombeVoisine()==0 && Voi.etatCase == 0) {
+                            leVoisin.decouvrir();
+                        }
+                    }
+
+
                 } 
             } 
-            
-        }else if (this.isEstBombe()) {
-                this.etatCase=1;
-                
-                
+
+        }else if (this.isEstBombe()&& this.etatCase!=2) {
+            this.etatCase=1;
             this.gameOver = true;
         }
-        
+
+
     }
     /** TODO comment method role
      * 
@@ -146,37 +145,37 @@ public class Case {
      */
     public boolean gameOver() {
         return this.gameOver;
-        
+
     }
-    
+
     /** TODO comment method role
      * 
      */
     public void setGameOver() {
         this.gameOver = true;
     }
-    
+
     /** TODO comment method role
      * @return -1 si le dradeau est sur une bombe, sinon return 0
      * 
      */
     public int drapeau() {
         if (this.estBombe) {
-                this.etatCase=2;
-                return -1;
-                
+            this.etatCase=2;
+            return -1;
+
         } else {
-                this.etatCase=2;
-                return 0;
+            this.etatCase=2;
+            return 0;
         }
-                
+
     }
     /** TODO comment method role
      * 
      */
     public void teset() {
-        
+
     }
-    
-    
+
+
 }

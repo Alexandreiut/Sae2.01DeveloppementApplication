@@ -12,12 +12,12 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import iut.sae.application.ControllerSAe;
+import iut.sae.application.DemineurControleur;
 /** TODO comment class responsibility (SRP)
  * @author tany.catalabailly
  *
  */
-public class Test extends Application {
+public class LauncheurDemineur extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -35,7 +35,7 @@ public class Test extends Application {
 			 MenuItem menuItemEnregistrer = new MenuItem("Enregistrer");*/
             FXMLLoader chargeurFXML = new FXMLLoader();
             //menuFichier.getItems().setAll(menuItemNouveau, menuItemOuvrir, menuItemEnregistrer);
-            chargeurFXML.setLocation(getClass().getResource("test.fxml")); 
+            chargeurFXML.setLocation(getClass().getResource("VueDemineur.fxml")); 
 
             Parent racine = chargeurFXML.load();
 
@@ -49,6 +49,9 @@ public class Test extends Application {
 
             Scene scene = new Scene(racine); 
 
+            //scene.getStylesheets().add("cssDemineur.css");
+            scene.getStylesheets().add( getClass().getResource( "cssDemineur.css" ).toExternalForm() );
+            
             primaryStage.setTitle("Demineur");
             primaryStage.setHeight(1000);
             primaryStage.setWidth(1000);

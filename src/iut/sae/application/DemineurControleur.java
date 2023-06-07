@@ -36,7 +36,7 @@ import iut.sae.jeu.*;
  * @author tany.catalabailly
  *
  */
-public class ControllerSAe {
+public class DemineurControleur {
     
     private int seconds = 0;
     private  Timer timer;

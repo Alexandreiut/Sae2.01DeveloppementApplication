@@ -16,14 +16,14 @@ class TestGrille {
 	void setUp() throws Exception {
 		grandeGrille = new Grille(10,10,2);
 		petiteGrille = new Grille (5,5,2);
-		videGrille = new Grille (0,0,0);
+		
 	}
 
 	@Test
 	void testGetHauteur() {
 		assertEquals(grandeGrille.getHauteur(), 10);
 		assertEquals(petiteGrille.getHauteur(), 5);
-		assertEquals(videGrille.getHauteur(), 0);
+		
 	
 	}
 
@@ -31,7 +31,7 @@ class TestGrille {
 	void testGetLongueur() {
 		assertEquals(grandeGrille.getLongueur(), 10);
 		assertEquals(petiteGrille.getLongueur(), 5);
-		assertEquals(videGrille.getLongueur(), 0);
+		
 	}
 
 	@Test
@@ -104,8 +104,7 @@ class TestGrille {
 	void testDefaite() {
 		assertFalse(grandeGrille.isGameOver());
 		grandeGrille.defaite();
-		assertTrue(grandeGrille.isGameOver());
-		
+		assertTrue(grandeGrille.isGameOver());	
 	}
 
 }

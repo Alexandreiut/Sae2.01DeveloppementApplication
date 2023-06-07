@@ -1,0 +1,18 @@
+else if (this.isEstBombe()&& this.etatCase!=2) {
+        	this.etatCase=1;
+            this.gameOver = true;
+        }
+        
+        
+     	if (event.getButton() == MouseButton.PRIMARY && grille.getListeCase().get(position).getEtatCase() <2) {
+										if (grille.getListeCase().get(position).getEtatCase()==1 ) {
+											System.out.println("doubleClick");
+											grille.getListeCase().get(position).decouvrirDoubleClic();
+											for (Case voisin : grille.getListeCase().get(position).getListeVoisin()) {
+												if (voisin.gameOver() && voisin.getEtatCase() != 2) {
+													grille.defaite();
+
+												}
+											}
+											
+										}
